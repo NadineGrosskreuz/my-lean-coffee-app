@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
-import CardGrid from "./src/components/CardGrid";
-import { getCards } from "./src/services/get-cards";
+import CardGrid from "../src/components/CardGrid";
+import { getCards } from "../src/services/get-cards";
 
 export function getStaticProps() {
   const cards = getCards();

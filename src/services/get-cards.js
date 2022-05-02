@@ -1,5 +1,12 @@
-import data from "./static-cards.json";
+import Card from "../models/Card";
+import User from "../models/User";
+import { dbConnect } from "../lib/database";
 
-export const getCards = () => {
-  return data;
+export const getCards = async () => {
+  await dbConnect();
+  //populate ist wichtig
+  const data = await Card.find().populate("user");
+  return data.map(({ id, content, user }) => {
+    return { id, content, name: user.name };
+  });
 };

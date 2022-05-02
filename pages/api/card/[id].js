@@ -1,17 +1,34 @@
-import { getCards } from "../../../src/services/get-cards";
+import Card from "../../../src/models/Card";
+import User from "../../../src/models/User";
 
-export default function handler(request, response) {
+export default async function handler(request, response) {
   const { id } = request.query;
-  const cards = getCards();
 
-  const singleCard = cards.find((card) => card.id === id);
+  /*const cards = getCards();
+  const singleCard = cards.find((card) => card.id === id);*/
 
   if (request.method === "DELETE") {
-    response.status(200).json({ message: "card deleted", card: singleCard });
+    const deletedCard = await Card.findByIdAndDelete(id);
+    response.status(200).json({ message: "card deleted", card: deletedCard });
   } else if (request.method === "PUT") {
-    const changedCard = JSON.parse(request.body);
-    response.status(200).json({ message: "card updated", card: changedCard });
+    const data = JSON.parse(request.body);
+    const card = await Card.findById(id);
+    const changedCard = await Card.findByIdAndUpdate(
+      id,
+      { content: data.content },
+      { new: true }
+    );
+    /*User Model auch hinzufügen*/
+    const changedUser = await User.findByIdAndUpdate(
+      card.user,
+      { name: data.name },
+      { new: true }
+    );
+    response
+      .status(200)
+      .json({ message: "card updated", card: changedCard, changedUser });
   } else {
+    const singleCard = await Card.findById(id);
     response.status(200).json(singleCard);
   }
 }

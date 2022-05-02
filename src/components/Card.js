@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSWRConfig } from "swr";
+import { mutate, useSWRConfig } from "swr";
 import {
   Button,
   Card as MuiCard,

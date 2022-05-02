@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./User"; /*ergänzt*/
 
 const cardSchema = new mongoose.Schema({
   content: String,

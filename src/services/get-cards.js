@@ -1,4 +1,5 @@
 import Card from "../models/Card";
+import User from "../models/User";
 import { dbConnect } from "../lib/database";
 
 export const getCards = async () => {
